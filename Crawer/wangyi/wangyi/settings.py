@@ -65,11 +65,12 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'wangyi.pipelines.WangyiPipeline': 300,
-    'wangyi.pipelines.Wangyi_editor': 400,
-    'wangyi.pipelines.Wangyi_source': 500,
-    'wangyi.pipelines.sina_source': 300,
-    'wangyi.pipelines.Acfun_insert': 300
+
+    'wangyi.pipelines.Wangyi_insert': 300,
+    'wangyi.pipelines.sina_insert': 300,
+    'wangyi.pipelines.acfun_insert': 300
+
+    # 'scrapy_redis.pipelines.RedisPipeline': 301
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -87,10 +88,18 @@ ITEM_PIPELINES = {
 
 # Enable and configure HTTP caching (disabled by default)
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-HTTPCACHE_ENABLED = True
-HTTPCACHE_EXPIRATION_SECS = 0
-HTTPCACHE_DIR = 'httpcache'
-HTTPCACHE_IGNORE_HTTP_CODES = []
-HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_ENABLED = True
+# HTTPCACHE_EXPIRATION_SECS = 0
+# HTTPCACHE_DIR = 'httpcache'
+# HTTPCACHE_IGNORE_HTTP_CODES = []
+# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 FEED_EXPORT_ENCODING = 'utf-8'
+
+# Enables scheduling storing requests queue in redis.
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+
+# Ensure all spiders share same duplicates filter through redis.
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+
+REDIS_URL = 'redis://user:wenboyu@118.89.150.14:6379'
